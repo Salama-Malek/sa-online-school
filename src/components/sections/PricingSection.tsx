@@ -2,9 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import SectionContainer from '../common/SectionContainer';
 import { useLanguage } from '../../hooks/useLanguage';
+import { usePolicyAgreement } from '../../hooks/usePolicyAgreement';
 
 const PricingSection: React.FC = () => {
   const { t, language } = useLanguage();
+  const { requireAgreement } = usePolicyAgreement();
   const isRTL = language === 'ar';
 
   const plans = React.useMemo(
@@ -77,7 +79,16 @@ const PricingSection: React.FC = () => {
                 ))}
               </ul>
               <div className="mt-8 flex-1" />
-              <a href="#contact" className="accent-button mt-8">
+              <a
+                href="#contact"
+                className="accent-button mt-8"
+                onClick={(event) => {
+                  if (!requireAgreement(t.policy.toastRequired)) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }
+                }}
+              >
                 {t.pricing.start}
               </a>
             </motion.article>

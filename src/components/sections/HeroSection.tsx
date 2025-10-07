@@ -3,107 +3,127 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLanguage } from '../../hooks/useLanguage';
 
 const HeroSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end start'] });
   const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const isRTL = language === 'ar';
 
-  const highlights = [t.hero.approach, t.hero.teacherSupport, t.hero.community];
-  const nameHighlight = t.about.name.split('|')[0]?.trim() ?? 'Sarah Gerges';
+  const highlightPills = [t.hero.flexible, t.hero.approach, t.hero.teacherSupport];
+  const teacherName = t.about.name.split('|')[0]?.trim() ?? 'Sarah Gerges';
 
   return (
     <section
       id="hero"
       ref={containerRef}
-      className="relative overflow-hidden bg-gradient-to-b from-white via-background-light to-white/60 pb-24 pt-28 text-center transition dark:from-slate-950 dark:via-slate-900 dark:to-slate-950/60 sm:pt-32 lg:text-start"
+      className="relative isolate overflow-hidden bg-gradient-to-b from-accent/20 via-transparent to-transparent pb-24 pt-28 text-center transition-colors duration-500 dark:from-accent/10 sm:pt-32"
     >
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="gradient-sheen absolute inset-0 opacity-90" />
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(129,140,248,0.18),transparent_60%)] dark:bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.22),transparent_60%)]" />
         <motion.div
-          className="absolute -left-32 top-20 h-80 w-80 rounded-full bg-accent/20 blur-3xl dark:bg-secondary/30"
-          animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.05, 1] }}
-          transition={{ repeat: Infinity, duration: 12, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-secondary/20 blur-3xl dark:bg-accent/20"
-          animate={{ opacity: [0.4, 0.7, 0.4], scale: [1, 1.08, 1] }}
+          className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-secondary/20 blur-3xl dark:bg-secondary/30"
+          animate={{ opacity: [0.25, 0.6, 0.25], scale: [1, 1.06, 1] }}
           transition={{ repeat: Infinity, duration: 14, ease: 'easeInOut' }}
         />
-      </div>
-      <div className="relative mx-auto grid w-full max-w-6xl items-center gap-16 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr]">
         <motion.div
-          className="space-y-8"
+          className="absolute -right-32 bottom-0 h-96 w-96 rounded-full bg-accent/20 blur-3xl dark:bg-accent/25"
+          animate={{ opacity: [0.3, 0.55, 0.3], scale: [1, 1.08, 1] }}
+          transition={{ repeat: Infinity, duration: 16, ease: 'easeInOut' }}
+        />
+      </div>
+      <div className="relative mx-auto flex min-h-[calc(100vh-6rem)] w-full max-w-6xl flex-col justify-center gap-16 px-4 sm:px-6 lg:flex-row lg:items-center lg:text-left">
+        <motion.div
+          className={`flex flex-1 flex-col items-center gap-8 text-center lg:items-start ${isRTL ? 'lg:text-right' : ''}`}
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-accent/40 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-secondary shadow-lg shadow-accent/20 dark:bg-slate-900/60">
+          <motion.span
+            className="inline-flex items-center gap-2 rounded-full border border-secondary/40 bg-white/60 px-5 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-secondary shadow-[0_15px_40px_-30px_rgba(30,41,59,0.65)] dark:bg-surface/60"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.8, ease: 'easeOut' }}
+          >
             {t.hero.flexible}
-          </div>
-          <div className="space-y-4">
-            <motion.h1 className="text-4xl leading-tight sm:text-5xl md:text-6xl">
-              <span className="text-slate-700 dark:text-slate-200">{t.hero.title}</span>
-              <br />
-              <span className="bg-gradient-to-r from-secondary via-accent to-secondary bg-clip-text text-transparent">
-                {nameHighlight}
+          </motion.span>
+          <div className="space-y-5">
+            <motion.h1
+              className="text-4xl font-bold leading-tight text-slate-900 dark:text-slate-100 sm:text-5xl md:text-6xl"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.8, ease: 'easeOut' }}
+            >
+              {t.hero.title}
+              <span className="block bg-gradient-to-r from-secondary via-accent to-secondary bg-clip-text text-transparent">
+                {teacherName}
               </span>
             </motion.h1>
-            <p className="max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
+            <motion.p
+              className="mx-auto max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg lg:mx-0"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8, ease: 'easeOut' }}
+            >
               {t.hero.tagline}
-            </p>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {highlights.map((item) => (
+            </motion.p>
+            <motion.div
+              className="grid w-full gap-4 sm:grid-cols-3 sm:gap-5"
+              initial="hidden"
+              animate="visible"
+              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
+            >
+              {highlightPills.map((pill) => (
                 <motion.div
-                  key={item}
-                  className="glass-panel text-start text-sm text-slate-600 shadow-lg shadow-slate-900/5 dark:text-slate-300"
-                  whileHover={{ y: -4 }}
-                  transition={{ type: 'spring', stiffness: 250, damping: 20 }}
+                  key={pill}
+                  className="glass-panel h-full text-left text-sm text-slate-600 shadow-[0_25px_70px_-40px_rgba(30,41,59,0.65)] transition dark:text-slate-200"
+                  variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } } }}
+                  whileHover={{ y: -6 }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 22 }}
                 >
-                  {item}
+                  {pill}
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
-          <div className="flex flex-col items-center gap-4 text-sm sm:flex-row sm:items-center sm:justify-start">
-            <a
-              href="#courses"
-              className="inline-flex items-center justify-center rounded-full bg-secondary px-8 py-3 text-base font-semibold text-white shadow-lg shadow-secondary/40 transition hover:-translate-y-1 hover:shadow-glow"
-            >
-              {t.hero.ctaCourses}
+          <motion.div
+            className={`flex flex-col items-center gap-4 sm:flex-row ${isRTL ? 'sm:flex-row-reverse' : ''}`}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25, duration: 0.8, ease: 'easeOut' }}
+          >
+            <a href="#courses" className="accent-button">
+              {t.pricing.start}
             </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center justify-center rounded-full border border-accent px-8 py-3 text-base font-semibold text-accent transition hover:bg-accent/10"
-            >
+            <a href="#contact" className="outline-button">
               {t.hero.ctaContact}
             </a>
-          </div>
+          </motion.div>
         </motion.div>
         <motion.div
-          className="relative"
-          initial={{ opacity: 0, y: 30 }}
+          className="relative flex-1"
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.9, ease: 'easeOut' }}
         >
           <motion.div
-            className="gradient-border relative overflow-hidden rounded-[36px] bg-white/80 p-4 shadow-2xl shadow-accent/20 dark:bg-slate-900/70"
+            className="gradient-border relative mx-auto max-w-xl overflow-hidden rounded-[40px] bg-white/75 p-4 shadow-[0_50px_120px_-60px_rgba(30,41,59,0.85)] dark:bg-surface/60"
             style={{ y: parallaxY }}
           >
             <img
               src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1200&q=80"
               alt="Teacher leading online language lesson"
               loading="lazy"
-              className="h-full w-full rounded-[28px] object-cover"
+              className="h-full w-full rounded-[32px] object-cover"
             />
             <motion.div
-              className="absolute inset-x-8 bottom-8 rounded-2xl bg-white/90 p-6 text-start shadow-xl shadow-slate-900/10 dark:bg-slate-900/80"
-              initial={{ opacity: 0, y: 24 }}
+              className="absolute inset-x-8 bottom-8 rounded-3xl bg-white/90 p-6 text-left shadow-[0_30px_70px_-40px_rgba(30,41,59,0.6)] dark:bg-surface/80"
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6, ease: 'easeOut' }}
+              transition={{ delay: 0.4, duration: 0.7, ease: 'easeOut' }}
             >
-              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-secondary">{t.about.heading}</p>
-              <p className="mt-2 text-lg font-display text-slate-900 dark:text-slate-100">{t.about.summary}</p>
-              <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{t.about.specialities}</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-secondary">{t.about.heading}</p>
+              <p className="mt-3 text-lg font-display text-slate-900 dark:text-slate-100">{t.about.summary}</p>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{t.about.specialities}</p>
             </motion.div>
           </motion.div>
         </motion.div>

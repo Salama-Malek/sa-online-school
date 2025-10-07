@@ -11,7 +11,7 @@ const HomePage = lazy(() => import('./pages/Home'));
 const App: React.FC = () => (
   <ThemeProvider>
     <LanguageProvider>
-      <div className="min-h-screen flex flex-col bg-background-light text-slate-900 dark:bg-background-dark dark:text-slate-100 transition-colors duration-500">
+      <div className="min-h-screen flex flex-col bg-gradient-to-b from-white via-background-light to-white text-slate-900 transition-colors duration-500 dark:from-background-dark dark:via-surface dark:to-background-dark dark:text-slate-100">
         <Header />
         <ScrollProgress />
         <main className="flex-1">

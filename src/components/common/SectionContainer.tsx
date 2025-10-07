@@ -19,7 +19,7 @@ const SectionContainer: React.FC<SectionContainerProps> = ({ id, children, class
   }, [controls, isInView]);
 
   return (
-    <section id={id} className={`section-padding ${className ?? ''}`.trim()}>
+    <section id={id} className={`section-padding section-gradient ${className ?? ''}`.trim()}>
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 30 }}

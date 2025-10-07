@@ -14,7 +14,8 @@ import { useLanguage } from '../../hooks/useLanguage';
 const iconSet = [AcademicCapIcon, ClockIcon, CalendarDaysIcon, ShieldCheckIcon, ClipboardDocumentCheckIcon, UsersIcon];
 
 const RulesSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isRTL = language === 'ar';
 
   const groupedRules = React.useMemo(() => {
     const rules: { title: string; body: string[] }[] = [];
@@ -27,7 +28,7 @@ const RulesSection: React.FC = () => {
           rules.push(current);
         }
         current = { title: trimmed, body: [] };
-      } else if (current) {
+      } else if (current && trimmed.length > 0) {
         current.body.push(trimmed);
       }
     });
@@ -40,31 +41,44 @@ const RulesSection: React.FC = () => {
   }, [t.rules.items]);
 
   return (
-    <SectionContainer id="rules">
-      <div className="space-y-10">
-        <div className="text-center lg:text-start">
-          <span className="text-xs font-semibold uppercase tracking-[0.4em] text-secondary">{t.rules.heading}</span>
-          <h2 className="mt-4 text-4xl font-display text-slate-900 dark:text-slate-100">{t.rules.heading}</h2>
+    <SectionContainer id="rules" className="bg-transparent">
+      <div className="space-y-12">
+        <div className={`space-y-4 text-center lg:text-left ${isRTL ? 'lg:text-right' : ''}`}>
+          <span className="text-xs font-semibold uppercase tracking-[0.35em] text-secondary">{t.rules.heading}</span>
+          <h2 className="text-4xl font-bold leading-tight text-slate-900 dark:text-slate-100">{t.rules.heading}</h2>
+          <p className="mx-auto max-w-3xl text-sm leading-relaxed text-slate-600 dark:text-slate-300 lg:mx-0">
+            {t.pricing.cta}
+          </p>
         </div>
-        <div className="grid gap-6 lg:grid-cols-2">
+        <motion.div
+          className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.25 }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+        >
           {groupedRules.map((rule, index) => {
             const Icon = iconSet[index % iconSet.length];
             return (
               <motion.article
                 key={rule.title}
-                className="flex h-full flex-col rounded-3xl border border-slate-200/70 bg-white/90 p-6 text-sm text-slate-600 shadow-lg shadow-slate-200/20 transition hover:-translate-y-2 hover:border-accent hover:shadow-glow dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-slate-300"
-                whileHover={{ y: -8 }}
-                transition={{ type: 'spring', stiffness: 220, damping: 20 }}
+                className="flex h-full flex-col rounded-[28px] border border-slate-200/60 bg-white/85 p-6 text-sm text-slate-600 shadow-[0_30px_90px_-60px_rgba(30,41,59,0.6)] transition hover:-translate-y-3 hover:border-accent hover:shadow-glow dark:border-slate-700/60 dark:bg-surface/60 dark:text-slate-200"
+                variants={{ hidden: { opacity: 0, y: 35 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } } }}
+                whileHover={{ y: -10 }}
+                transition={{ type: 'spring', stiffness: 240, damping: 20 }}
               >
-                <div className="flex items-center gap-3">
+                <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
                   <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-secondary/15 text-secondary">
                     <Icon className="h-6 w-6" />
                   </span>
                   <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">{rule.title}</h3>
                 </div>
-                <ul className="mt-4 space-y-3 ps-2">
+                <ul className={`mt-4 space-y-3 ${isRTL ? 'text-right' : 'text-left'}`}>
                   {rule.body.map((item) => (
-                    <li key={item} className="rounded-xl border border-slate-200/60 bg-white/70 p-3 leading-relaxed dark:border-slate-700/60 dark:bg-slate-900/60">
+                    <li
+                      key={item}
+                      className="rounded-2xl border border-slate-200/60 bg-white/70 px-4 py-3 leading-relaxed dark:border-slate-700/60 dark:bg-surface/70"
+                    >
                       {item}
                     </li>
                   ))}
@@ -72,7 +86,7 @@ const RulesSection: React.FC = () => {
               </motion.article>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </SectionContainer>
   );

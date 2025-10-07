@@ -3,11 +3,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { AtSymbolIcon, ChatBubbleBottomCenterTextIcon, PhoneArrowUpRightIcon } from '@heroicons/react/24/outline';
 import SectionContainer from '../common/SectionContainer';
 import { useLanguage } from '../../hooks/useLanguage';
+import { usePolicyAgreement } from '../../hooks/usePolicyAgreement';
 
 const ContactSection: React.FC = () => {
   const { t, language } = useLanguage();
   const isRTL = language === 'ar';
   const [isToastVisible, setToastVisible] = React.useState(false);
+  const { requireAgreement } = usePolicyAgreement();
 
   const contactCards = [
     { label: t.contact.heading, icon: <PhoneArrowUpRightIcon className="h-5 w-5" />, href: 'https://wa.me/79526891253' },
@@ -18,6 +20,9 @@ const ContactSection: React.FC = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
+    if (!requireAgreement(t.policy.toastRequired)) {
+      return;
+    }
     setToastVisible(true);
     window.setTimeout(() => setToastVisible(false), 3200);
     event.currentTarget.reset();

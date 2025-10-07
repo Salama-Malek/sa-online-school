@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useLanguage } from '../../hooks/useLanguage';
+import { usePolicyAgreement } from '../../hooks/usePolicyAgreement';
 
 const HeroSection: React.FC = () => {
   const { t, language } = useLanguage();
+  const { requireAgreement } = usePolicyAgreement();
   const containerRef = React.useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end start'] });
   const parallaxY = useTransform(scrollYProgress, [0, 1], [0, -120]);
@@ -11,6 +13,13 @@ const HeroSection: React.FC = () => {
 
   const highlightPills = [t.hero.flexible, t.hero.approach, t.hero.teacherSupport];
   const teacherName = t.about.name.split('|')[0]?.trim() ?? 'Sarah Gerges';
+
+  const handleProtectedClick: React.MouseEventHandler<HTMLAnchorElement> = (event) => {
+    if (!requireAgreement(t.policy.toastRequired)) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
 
   return (
     <section
@@ -91,10 +100,10 @@ const HeroSection: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.8, ease: 'easeOut' }}
           >
-            <a href="#courses" className="accent-button">
+            <a href="#courses" className="accent-button" onClick={handleProtectedClick}>
               {t.pricing.start}
             </a>
-            <a href="#contact" className="outline-button">
+            <a href="#contact" className="outline-button" onClick={handleProtectedClick}>
               {t.hero.ctaContact}
             </a>
           </motion.div>

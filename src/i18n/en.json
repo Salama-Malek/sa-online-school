@@ -176,6 +176,24 @@
       "If the student does not show up for the lesson within the first 15 minutes and does not contact the teacher in the study chat, the teacher will end the lesson, leave the online room, and the lesson will be considered to have taken place. If the teacher is notified of the delay within the first 15 minutes, they will wait for the student for the remainder of the lesson. In this case, the lesson will end at the scheduled time, even if it lasted only a few minutes."
     ]
   },
+  "policy": {
+    "title": "School Rules & Learning Agreement",
+    "subtitle": "Please review carefully",
+    "description": "These policies outline the expectations for scheduling, payments, and respectful collaboration between students and the SA Online School team.",
+    "acknowledge": "I have read and agree to the School Rules.",
+    "statusLabel": "Agreement status",
+    "statusAccepted": "Accepted",
+    "statusPending": "Pending review",
+    "close": "Close",
+    "accepted": "Thank you! Your agreement has been saved.",
+    "toastRequired": "Please read and accept the School Rules before continuing.",
+    "openLink": "School Rules",
+    "preview": "Understand how lessons are scheduled, paid for, and rescheduled before you begin. Explore the key highlights below and open the full agreement for full details.",
+    "readMore": "Read section",
+    "summaryHeading": "Full policy overview",
+    "summary": "The Learning Agreement covers payments, scheduling, attendance, breaks, and how both students and teachers coordinate lessons. Review it to ensure a smooth learning journey.",
+    "viewFull": "Open School Rules"
+  },
   "contact": {
     "heading": "WhatsApp\\ telegram: +79526891253",
     "description": "VK: https://vk.com/saonlineschool",

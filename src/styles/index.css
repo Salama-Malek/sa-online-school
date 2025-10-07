@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: theme('colors.background.light');
+  color: #0f172a;
+}
+
+.dark body {
+  background-color: theme('colors.background.dark');
+  color: #f8fafc;
+}
+
+.section-padding {
+  @apply py-20 sm:py-24;
+}
+
+.section-card {
+  @apply bg-white/80 dark:bg-slate-900/70 backdrop-blur-md rounded-2xl shadow-xl dark:shadow-none border border-slate-200/60 dark:border-slate-700/60;
+}
+
+.section-heading {
+  @apply text-3xl sm:text-4xl font-bold mb-6 text-slate-900 dark:text-slate-100;
+}
+
+.section-subheading {
+  @apply text-lg text-slate-600 dark:text-slate-300;
+}

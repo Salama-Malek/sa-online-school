@@ -35,8 +35,8 @@ const Header: React.FC = () => {
 
   return (
     <motion.header
-      className={`sticky top-0 z-50 border-b border-transparent bg-white/60 backdrop-blur-xl transition-all duration-500 dark:bg-slate-950/40 ${
-        isScrolled ? 'shadow-lg shadow-slate-900/5 dark:shadow-slate-900/40' : ''
+      className={`sticky top-0 z-50 border-b border-white/10 bg-white/70 backdrop-blur-2xl transition-all duration-500 dark:border-slate-800/60 dark:bg-surface/70 ${
+        isScrolled ? 'shadow-[0_20px_70px_-40px_rgba(15,23,42,0.45)]' : ''
       }`}
       initial={{ y: -40, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -51,13 +51,13 @@ const Header: React.FC = () => {
           href="#hero"
           className="flex items-center gap-2 text-lg font-display font-semibold tracking-tight text-slate-800 transition hover:text-secondary dark:text-slate-100"
         >
-          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-tr from-accent/80 to-secondary/80 text-sm font-semibold text-slate-900 shadow-lg shadow-accent/30">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-tr from-accent via-secondary to-accent text-sm font-semibold text-slate-900 shadow-[0_20px_45px_-25px_rgba(56,189,248,0.8)]">
             SA
           </span>
           <span className="hidden sm:block">SA Online School</span>
         </a>
         <nav
-          className={`hidden items-center gap-6 text-sm font-medium text-slate-600 transition-colors dark:text-slate-200 lg:flex ${
+          className={`hidden items-center gap-6 text-sm font-semibold text-slate-600 transition-colors dark:text-slate-200 lg:flex ${
             isRTL ? 'flex-row-reverse space-x-reverse' : ''
           }`}
         >
@@ -74,20 +74,12 @@ const Header: React.FC = () => {
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
           <ThemeToggle />
+          <a href="#courses" className="hidden lg:inline-flex accent-button px-5 py-2 text-sm">
+            {t.pricing.start}
+          </a>
           <button
             type="button"
-            className="inline-flex items-center rounded-full bg-gradient-to-r from-accent via-secondary to-accent px-4 py-2 text-xs font-semibold text-slate-900 shadow-glow transition hover:scale-105"
-            onClick={() => {
-              closeMenu();
-              const target = document.getElementById('contact');
-              target?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
-            {t.hero.ctaContact}
-          </button>
-          <button
-            type="button"
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/70 bg-white/70 text-slate-700 transition hover:border-accent hover:text-accent dark:border-slate-700/60 dark:bg-slate-900/40 dark:text-slate-200 lg:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/70 bg-white/70 text-slate-700 transition hover:border-accent hover:text-accent dark:border-slate-700/60 dark:bg-surface/60 dark:text-slate-200 lg:hidden"
             onClick={toggleMenu}
             aria-label="Toggle navigation"
           >
@@ -104,7 +96,7 @@ const Header: React.FC = () => {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
           >
-            <div className="mx-4 mb-4 space-y-2 rounded-2xl border border-slate-200/60 bg-white/80 p-4 text-sm font-medium shadow-lg shadow-slate-200/30 dark:border-slate-800/70 dark:bg-slate-900/80">
+            <div className="mx-4 mb-4 space-y-2 rounded-2xl border border-slate-200/60 bg-white/80 p-4 text-sm font-medium shadow-lg shadow-slate-200/30 dark:border-slate-800/70 dark:bg-surface/80">
               {navItems.map((item) => (
                 <a
                   key={item.id}
@@ -115,6 +107,13 @@ const Header: React.FC = () => {
                   {item.label}
                 </a>
               ))}
+              <a
+                href="#contact"
+                className="block rounded-xl px-4 py-3 text-slate-700 transition hover:bg-accent/10 hover:text-secondary dark:text-slate-200 dark:hover:bg-slate-800/70"
+                onClick={closeMenu}
+              >
+                {t.hero.ctaContact}
+              </a>
             </div>
           </motion.nav>
         )}

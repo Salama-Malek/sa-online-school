@@ -9,12 +9,13 @@ module.exports = {
           light: '#f8fafc',
           dark: '#0f172a',
         },
+        surface: '#1e293b',
         accent: '#38bdf8',
         secondary: '#818cf8',
       },
       fontFamily: {
-        display: ['"Playfair Display"', 'serif'],
-        body: ['"Plus Jakarta Sans"', '"Inter"', 'system-ui', 'sans-serif'],
+        display: ['"Inter"', 'sans-serif'],
+        body: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         glow: '0 20px 45px -20px rgba(56, 189, 248, 0.45)',

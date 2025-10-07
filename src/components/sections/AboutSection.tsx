@@ -7,71 +7,86 @@ const AboutSection: React.FC = () => {
   const { t, language } = useLanguage();
   const isRTL = language === 'ar';
 
-  const storyParagraphs = [t.about.journey, t.about.coaching, t.about.support, t.about.call];
-  const expertiseCards = [t.about.experience, t.about.achievements, t.about.education];
+  const narrative = [t.about.journey, t.about.coaching, t.about.support, t.about.call];
+  const focusAreas = [
+    { title: t.about.mission, description: t.about.experience },
+    { title: t.hero.teacherSupport, description: t.about.achievements },
+    { title: t.about.education, description: t.hero.community },
+  ];
   const badges = [t.about.summary, t.about.specialities, t.hero.flexible];
 
   return (
-    <SectionContainer id="about" className="relative">
-      <div className="relative overflow-hidden rounded-[36px] border border-slate-200/80 bg-white/80 p-10 shadow-2xl shadow-slate-200/40 backdrop-blur-xl dark:border-slate-800/70 dark:bg-slate-900/70">
-        <div className="absolute -top-20 right-4 h-64 w-64 rounded-full bg-accent/10 blur-3xl dark:bg-secondary/20" />
-        <div className="relative grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-          <div className={`space-y-8 ${isRTL ? 'rtl:text-right' : ''}`}>
-            <div className="space-y-3">
-              <span className="text-xs font-semibold uppercase tracking-[0.4em] text-secondary">{t.about.heading}</span>
-              <h2 className="text-4xl font-display leading-tight text-slate-900 dark:text-slate-100">
-                {t.about.name}
-              </h2>
-              <div className="flex flex-wrap gap-3">
+    <SectionContainer id="about" className="relative bg-transparent">
+      <div className="relative overflow-hidden rounded-[40px] border border-slate-200/60 bg-white/80 px-8 py-12 shadow-[0_45px_140px_-60px_rgba(15,23,42,0.35)] backdrop-blur-2xl dark:border-slate-800/70 dark:bg-surface/70">
+        <motion.div
+          className="absolute -left-24 top-10 h-56 w-56 rounded-full bg-secondary/15 blur-3xl dark:bg-secondary/20"
+          aria-hidden
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 0.6, scale: 1 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        />
+        <div className={`relative grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center ${isRTL ? 'rtl:text-right' : ''}`}>
+          <motion.div
+            className="space-y-8"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <div className="space-y-4">
+              <span className="text-xs font-semibold uppercase tracking-[0.35em] text-secondary">{t.about.heading}</span>
+              <h2 className="text-4xl font-bold leading-tight text-slate-900 dark:text-slate-100 sm:text-5xl">{t.about.name}</h2>
+              <div className={`flex flex-wrap gap-3 ${isRTL ? 'justify-end' : ''}`}>
                 {badges.map((badge) => (
                   <span
                     key={badge}
-                    className="inline-flex items-center rounded-full border border-secondary/40 bg-secondary/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-secondary"
+                    className="inline-flex items-center rounded-full border border-secondary/40 bg-secondary/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-secondary"
                   >
                     {badge}
                   </span>
                 ))}
               </div>
             </div>
-            <div className="grid gap-5 text-base leading-relaxed text-slate-600 dark:text-slate-300">
-              {storyParagraphs.map((paragraph) => (
+            <div className="space-y-5 text-base leading-relaxed text-slate-600 dark:text-slate-300">
+              {narrative.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
             </div>
-            <div className="text-sm font-semibold text-accent">
+            <div className="inline-flex items-center gap-3 rounded-full border border-accent/50 bg-white/70 px-5 py-3 text-sm font-semibold text-accent shadow-[0_25px_70px_-40px_rgba(30,41,59,0.6)] dark:bg-surface/70">
               <a href="mailto:sarahnadynakhla@gmail.com" className="hover:underline">
                 {t.about.email}
               </a>
             </div>
-          </div>
-          <div className="space-y-6">
-            <motion.div
-              className="overflow-hidden rounded-3xl border border-white/40 bg-white/80 shadow-xl shadow-slate-200/30 backdrop-blur-lg dark:border-slate-700/60 dark:bg-slate-900/60"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
-              viewport={{ once: true, amount: 0.4 }}
-            >
+          </motion.div>
+          <motion.div
+            className={`flex flex-col gap-6 ${isRTL ? 'rtl:lg:flex-row-reverse' : ''}`}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.8, ease: 'easeOut' }}
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <div className="relative overflow-hidden rounded-[32px] border border-white/40 bg-white/70 shadow-[0_35px_120px_-60px_rgba(30,41,59,0.75)] backdrop-blur-xl dark:border-slate-700/60 dark:bg-surface/70">
               <img
                 src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1100&q=80"
                 alt="Sarah Gerges teaching online"
                 loading="lazy"
-                className="h-72 w-full object-cover"
+                className="h-80 w-full object-cover"
               />
-            </motion.div>
-            <div className="grid gap-4">
-              {expertiseCards.map((item) => (
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {focusAreas.map((item) => (
                 <motion.div
-                  key={item}
-                  className="rounded-2xl border border-slate-200/70 bg-white/90 p-5 text-sm leading-relaxed text-slate-600 shadow-lg shadow-slate-200/20 transition hover:-translate-y-1 hover:border-accent hover:shadow-glow dark:border-slate-700/60 dark:bg-slate-900/70 dark:text-slate-300"
-                  whileHover={{ y: -6 }}
-                  transition={{ type: 'spring', stiffness: 220, damping: 18 }}
+                  key={item.title}
+                  className="group flex h-full flex-col justify-between rounded-3xl border border-slate-200/60 bg-white/80 p-5 text-left text-sm leading-relaxed text-slate-600 shadow-[0_25px_60px_-50px_rgba(30,41,59,0.65)] transition hover:-translate-y-2 hover:border-accent hover:text-secondary dark:border-slate-700/60 dark:bg-surface/60 dark:text-slate-200"
+                  whileHover={{ y: -8 }}
+                  transition={{ type: 'spring', stiffness: 240, damping: 20 }}
                 >
-                  {item}
+                  <span className="text-sm font-semibold text-secondary">{item.title}</span>
+                  <p className="mt-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">{item.description}</p>
                 </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </SectionContainer>

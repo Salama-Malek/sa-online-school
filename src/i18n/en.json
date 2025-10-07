@@ -4,6 +4,7 @@
     "short": "EN"
   },
   "nav": {
+    "home": "Home",
     "about": "About school",
     "courses": "Courses",
     "pricing": "Individual lessons",
@@ -139,7 +140,8 @@
     "cta": "Keep your balance positive at all times to avoid lesson cancellations.",
     "regionsHeading": "Lessons scheduled for the next day must be paid for by 9:00 p.m. (Moscow time).",
     "regions": "If the balance in the personal account is zero at 9:00 p.m., the lessons are canceled, and the teacher's time on that day will be taken by another student or used at their discretion, even if the balance was replenished afterwards.",
-    "note": "If the request to change the time of the lesson is made on the same day it was scheduled, the teacher will decide whether such a rescheduling is possible depending on their schedule, workload, and personal plans."
+    "note": "If the request to change the time of the lesson is made on the same day it was scheduled, the teacher will decide whether such a rescheduling is possible depending on their schedule, workload, and personal plans.",
+    "start": "Start Learning"
   },
   "rules": {
     "heading": "School rules:",

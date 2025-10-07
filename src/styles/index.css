@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,29 +12,85 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background-color: theme('colors.background.light');
-  color: #0f172a;
+@layer base {
+  body {
+    @apply bg-background-light font-body text-slate-900 antialiased transition-colors duration-500;
+  }
+
+  .dark body {
+    @apply bg-background-dark text-slate-100;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display tracking-tight text-slate-900 dark:text-slate-100;
+  }
 }
 
-.dark body {
-  background-color: theme('colors.background.dark');
-  color: #f8fafc;
+@layer components {
+  .section-padding {
+    @apply py-20 sm:py-24;
+  }
+
+  .section-card {
+    @apply rounded-3xl border border-slate-200/70 bg-white/80 p-8 shadow-xl shadow-slate-200/30 backdrop-blur-xl transition dark:border-slate-700/60 dark:bg-slate-900/70 dark:shadow-none;
+  }
+
+  .frosted-surface {
+    @apply border border-white/30 bg-white/20 backdrop-blur-xl dark:border-slate-700/40 dark:bg-slate-900/40;
+  }
+
+  .card-accent-ring {
+    @apply ring-1 ring-transparent transition hover:ring-accent/40 hover:shadow-glow;
+  }
 }
 
-.section-padding {
-  @apply py-20 sm:py-24;
-}
+@layer utilities {
+  .gradient-sheen {
+    background: radial-gradient(120% 120% at 0% 0%, rgba(56, 189, 248, 0.25), transparent 60%),
+      radial-gradient(110% 110% at 100% 0%, rgba(129, 140, 248, 0.22), transparent 55%),
+      linear-gradient(180deg, rgba(248, 250, 252, 0.94) 0%, rgba(248, 250, 252, 0.65) 100%);
+  }
 
-.section-card {
-  @apply bg-white/80 dark:bg-slate-900/70 backdrop-blur-md rounded-2xl shadow-xl dark:shadow-none border border-slate-200/60 dark:border-slate-700/60;
-}
+  .dark .gradient-sheen {
+    background: radial-gradient(120% 120% at 0% 0%, rgba(56, 189, 248, 0.25), transparent 60%),
+      radial-gradient(110% 110% at 100% 0%, rgba(129, 140, 248, 0.25), transparent 55%),
+      linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(15, 23, 42, 0.6) 100%);
+  }
 
-.section-heading {
-  @apply text-3xl sm:text-4xl font-bold mb-6 text-slate-900 dark:text-slate-100;
-}
+  .glass-panel {
+    @apply rounded-2xl border border-white/40 bg-white/50 p-6 shadow-lg shadow-slate-900/5 backdrop-blur-lg dark:border-slate-700/50 dark:bg-slate-900/60;
+  }
 
-.section-subheading {
-  @apply text-lg text-slate-600 dark:text-slate-300;
+  .dark .glass-panel {
+    @apply shadow-none;
+  }
+
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.65), rgba(129, 140, 248, 0.65));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+  }
+
+  [dir='rtl'] .rtl\:lg\:flex-row-reverse {
+    @apply lg:flex-row-reverse;
+  }
+
+  [dir='rtl'] .rtl\:text-right {
+    @apply text-right;
+  }
 }

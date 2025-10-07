@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { LayoutGroup, motion } from 'framer-motion';
 import SectionContainer from '../common/SectionContainer';
 import { useLanguage } from '../../hooks/useLanguage';
 

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowTopRightOnSquareIcon, EnvelopeIcon, PhoneIcon } from '@heroicons/react/24/outline';
 import { useLanguage } from '../../hooks/useLanguage';
+import { usePolicyAgreement } from '../../hooks/usePolicyAgreement';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();
+  const { openPolicy, requireAgreement, hasAccepted } = usePolicyAgreement();
   const [isModalOpen, setModalOpen] = useState(false);
 
   const quickLinks = [
@@ -14,6 +16,7 @@ const Footer: React.FC = () => {
     { id: 'pricing', label: t.nav.pricing },
     { id: 'rules', label: t.nav.rules },
     { id: 'contact', label: t.nav.contact },
+    { id: 'policy', label: t.policy.openLink, onClick: openPolicy },
   ];
 
   const contactCards = [
@@ -33,7 +36,16 @@ const Footer: React.FC = () => {
           </div>
           <p className="max-w-xl text-sm leading-relaxed text-slate-600 dark:text-slate-300">{t.hero.tagline}</p>
           <div className="flex flex-wrap items-center gap-3">
-            <a href="#courses" className="accent-button px-5 py-2 text-sm">
+            <a
+              href="#courses"
+              className="accent-button px-5 py-2 text-sm"
+              onClick={(event) => {
+                if (!requireAgreement(t.policy.toastRequired)) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+              }}
+            >
               {t.pricing.start}
             </a>
             <button
@@ -44,16 +56,42 @@ const Footer: React.FC = () => {
               About Developer
             </button>
           </div>
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-secondary/70">
+            <span>{t.policy.statusLabel}</span>
+            <span
+              className={`rounded-full px-3 py-1 text-[0.65rem] ${
+                hasAccepted
+                  ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-200'
+                  : 'bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-200'
+              }`}
+            >
+              {hasAccepted ? t.policy.statusAccepted : t.policy.statusPending}
+            </span>
+          </div>
         </div>
         <div>
           <h4 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Quick Links</h4>
           <ul className="mt-4 grid gap-3 text-sm text-slate-600 dark:text-slate-300">
             {quickLinks.map((link) => (
               <li key={link.id}>
-                <a href={`#${link.id}`} className="inline-flex items-center gap-2 rounded-xl px-3 py-2 transition hover:bg-accent/10 hover:text-secondary">
-                  <span className="h-2 w-2 rounded-full bg-secondary/60" />
-                  {link.label}
-                </a>
+                {link.onClick ? (
+                  <button
+                    type="button"
+                    onClick={link.onClick}
+                    className="inline-flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left transition hover:bg-accent/10 hover:text-secondary"
+                  >
+                    <span className="h-2 w-2 rounded-full bg-secondary/60" />
+                    {link.label}
+                  </button>
+                ) : (
+                  <a
+                    href={`#${link.id}`}
+                    className="inline-flex items-center gap-2 rounded-xl px-3 py-2 transition hover:bg-accent/10 hover:text-secondary"
+                  >
+                    <span className="h-2 w-2 rounded-full bg-secondary/60" />
+                    {link.label}
+                  </a>
+                )}
               </li>
             ))}
           </ul>

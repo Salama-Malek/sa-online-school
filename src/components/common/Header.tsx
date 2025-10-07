@@ -4,11 +4,13 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useLanguage } from '../../hooks/useLanguage';
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from './ThemeToggle';
+import { usePolicyAgreement } from '../../hooks/usePolicyAgreement';
 
 const Header: React.FC = () => {
   const { t, language } = useLanguage();
   const [isScrolled, setIsScrolled] = React.useState(false);
   const [isMenuOpen, setMenuOpen] = React.useState(false);
+  const { requireAgreement } = usePolicyAgreement();
 
   React.useEffect(() => {
     const onScroll = () => {
@@ -32,6 +34,13 @@ const Header: React.FC = () => {
   const toggleMenu = () => setMenuOpen((open) => !open);
   const closeMenu = () => setMenuOpen(false);
   const isRTL = language === 'ar';
+
+  const handleProtectedNavigation: React.MouseEventHandler<HTMLAnchorElement> = (event) => {
+    if (!requireAgreement(t.policy.toastRequired)) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
 
   return (
     <motion.header
@@ -74,7 +83,11 @@ const Header: React.FC = () => {
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
           <ThemeToggle />
-          <a href="#courses" className="hidden lg:inline-flex accent-button px-5 py-2 text-sm">
+          <a
+            href="#courses"
+            className="hidden lg:inline-flex accent-button px-5 py-2 text-sm"
+            onClick={handleProtectedNavigation}
+          >
             {t.pricing.start}
           </a>
           <button
@@ -110,7 +123,14 @@ const Header: React.FC = () => {
               <a
                 href="#contact"
                 className="block rounded-xl px-4 py-3 text-slate-700 transition hover:bg-accent/10 hover:text-secondary dark:text-slate-200 dark:hover:bg-slate-800/70"
-                onClick={closeMenu}
+                onClick={(event) => {
+                  if (!requireAgreement(t.policy.toastRequired)) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                  } else {
+                    closeMenu();
+                  }
+                }}
               >
                 {t.hero.ctaContact}
               </a>

@@ -79,3 +79,7 @@ src/
   styles/
     index.css                # Tailwind entry point
 ```
+
+## License
+
+MIT. See [LICENSE](LICENSE).

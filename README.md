@@ -1,34 +1,81 @@
 # SA Online School
 
-Marketing and enrolment site for an online school, built as a single-page React app in
-three languages.
+Trilingual marketing and enrolment site for an online English school, built as a single-page React application.
 
-## What is interesting here
+## Overview
 
-**Trilingual, including right-to-left.** Arabic, English and Russian share one layout
-(`src/i18n/{ar,en,ru}.json`). Arabic is not a translation bolted on at the end; the
-direction flips and the layout has to hold in both, which is the actual constraint.
+SA Online School is a single-page site presenting an online English-language school: its courses, pricing, and contact details. The page is fully localized in English, Russian, and Arabic (including right-to-left layout for Arabic), and persists the visitor's language, theme, and school-policy consent across visits.
 
-**Consent that persists.** A school policy modal and toast, backed by a
-`usePolicyAgreement` hook, so a visitor is asked once rather than on every visit.
+## Features
 
-**Theme and language as first-class state.** `useTheme` and `useLanguage` hooks with a
-switcher in the header, both surviving reload.
+- Trilingual content (English, Russian, Arabic) driven by JSON dictionaries, with automatic RTL layout for Arabic
+- Light/dark theme toggle with state persisted via a `useTheme` hook
+- Language switcher with state persisted via a `useLanguage` hook
+- School policy consent modal and toast, shown once per visitor via a `usePolicyAgreement` hook
+- Landing sections: Hero, About, Courses, Pricing, Rules, and Contact
+- Scroll progress indicator and scroll-to-top button
+- Animated UI built with Framer Motion and Heroicons
 
-## Sections
+## Tech stack
 
-Hero, About, Courses, Pricing, Rules, Contact, with a scroll progress indicator and a
-scroll-to-top control.
+- React 18 + TypeScript
+- Vite (build tooling and dev server)
+- Tailwind CSS (utility-first styling, class-based dark mode)
+- Framer Motion (animation)
+- Heroicons (icon set)
 
-## Stack
+## Getting started
 
-`React` `TypeScript` `Vite` `Tailwind CSS` `Framer Motion` `Heroicons`
+### Prerequisites
 
-## Running it
+- Node.js and npm
+
+### Install
 
 ```bash
 npm install
-npm run dev      # development
-npm run build    # production build
-npm run preview  # preview the build
+```
+
+### Run in development
+
+```bash
+npm run dev
+```
+
+### Build for production
+
+```bash
+npm run build
+```
+
+### Preview a production build
+
+```bash
+npm run preview
+```
+
+There are no required environment variables.
+
+## Project structure
+
+```
+index.html                  # HTML entry point, mounts #root
+src/
+  main.tsx                  # React entry point
+  App.tsx                   # App shell
+  pages/
+    Home.tsx                # Assembles the landing page sections
+  components/
+    common/                 # Header, Footer, theme/language switchers,
+                             #   policy modal/toast, scroll progress/top-button
+    sections/                # Hero, About, Courses, Pricing, Rules, Contact
+  hooks/
+    useLanguage.tsx          # Active language + persistence
+    useTheme.tsx             # Light/dark theme + persistence
+    usePolicyAgreement.tsx   # One-time school policy consent
+  i18n/
+    en.json, ru.json, ar.json  # Per-language content
+    index.ts                 # Language registry and default language
+  styles/
+    index.css                # Tailwind entry point
 ```
